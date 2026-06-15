@@ -1,4 +1,4 @@
-package tech.zaky.stockpanel;
+package tech.zaky.stockpanel.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

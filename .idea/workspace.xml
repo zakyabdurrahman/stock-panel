@@ -1,10 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="stockpanel:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8f5dbee1-055c-4550-a1e8-74ba1d2ec14c" name="Changes" comment="" />
+    <list default="true" id="8f5dbee1-055c-4550-a1e8-74ba1d2ec14c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/tech/zaky/stockpanel/appli.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/core.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/data/core.mv.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spec.md" beforeDir="false" afterPath="$PROJECT_DIR$/spec.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/controllers/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/StockPanelApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/StockPanelApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/tech/zaky/stockpanel/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/tech/zaky/stockpanel/hello-view.fxml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -53,10 +69,10 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/work/stock-panel",
-    "project.structure.last.edited": "SDKs",
+    "last_opened_file_path": "C:/work/stock-panel/build",
+    "project.structure.last.edited": "Artifacts",
     "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.7468355",
+    "project.structure.side.proportion": "0.34827587",
     "settings.editor.selected.configurable": "project.propCompiler"
   }
 }]]></component>
@@ -69,6 +85,7 @@
       <recent name="D:\kerjaan\stockpanel\src\main\java" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="tech.zaky.stockpanel.controllers" />
       <recent name="tech.zaky.stockpanel.models.enums" />
     </key>
   </component>

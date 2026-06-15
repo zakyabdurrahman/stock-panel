@@ -1,5 +1,7 @@
 package tech.zaky.stockpanel;
 
+import atlantafx.base.theme.NordDark;
+import atlantafx.base.theme.PrimerDark;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,10 +12,12 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.jdbc.Work;
+import tech.zaky.stockpanel.controllers.LoginController;
 import tech.zaky.stockpanel.models.Deposit;
 import tech.zaky.stockpanel.models.Holding;
 import tech.zaky.stockpanel.models.ReturnRecord;
 import tech.zaky.stockpanel.models.User;
+import tech.zaky.stockpanel.repositories.UserRepository;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -30,21 +34,25 @@ public class StockPanelApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(StockPanelApplication.class.getResource("hello-view.fxml"));
-
-
-
+        FXMLLoader fxmlLoader = new FXMLLoader(StockPanelApplication.class.getResource("login.fxml"));
         stage.setMaximized(true);
 
-        //scene take a root node (like GridPane or StackPane)
-        Scene scene = new Scene(fxmlLoader.load(), stage.getMaxWidth(), stage.getMaxHeight());
+
+
+        //setup db session
         setupSession();
+        //setup css
+        Application.setUserAgentStylesheet(new NordDark().getUserAgentStylesheet());
 
+        Scene scene = new Scene(fxmlLoader.load(), stage.getMaxWidth(), stage.getMaxHeight());
+        scene.getStylesheets().add(StockPanelApplication.class.getResource("appli.css").toExternalForm());
 
-        stage.setTitle("Hello!");
+        UserRepository userRepository = new UserRepository(session);
+        LoginController loginController = fxmlLoader.getController();
+        loginController.setUserRepository(userRepository);
+
+        stage.setTitle("StockPanel - Portfolio Manager");
         stage.setScene(scene);
-        
-
         stage.show();
     }
 
@@ -62,8 +70,7 @@ public class StockPanelApplication extends Application {
                     .buildSessionFactory()
                     .openSession();
 
-            System.out.println("session created");
-            System.out.println(session);
+
 
             session.doWork(new Work() {
                 @Override
