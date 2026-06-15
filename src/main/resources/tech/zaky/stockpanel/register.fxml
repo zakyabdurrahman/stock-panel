@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <StackPane xmlns:fx="http://javafx.com/fxml"
-           fx:controller="tech.zaky.stockpanel.controllers.LoginController"
+           fx:controller="tech.zaky.stockpanel.controllers.RegisterController"
            alignment="CENTER">
 
     <VBox alignment="CENTER" spacing="16.0" styleClass="card" maxWidth="360">
@@ -26,14 +26,15 @@
             <Label text="light portfolio manager" id="subtitle" styleClass="text-muted, text-caption"/>
         </VBox>
 
-        <Label text="Login" styleClass="title-2"/>
+        <Label text="Register" styleClass="title-2"/>
 
-        <TextField fx:id="usernameField" promptText="Username" />
+        <TextField fx:id="usernameField" promptText="Username"/>
         <PasswordField fx:id="passwordField" promptText="Password"/>
+        <PasswordField fx:id="confirmPasswordField" promptText="Confirm Password"/>
 
         <Label fx:id="errorLabel" styleClass="text-danger" visible="false" managed="false"/>
 
-        <Button text="Login" onAction="#onLogin" styleClass="accent, raised" maxWidth="Infinity"/>
-        <Hyperlink text="Create an account" onAction="#onRegisterLink" styleClass="link"/>
+        <Button text="Register" onAction="#onRegister" styleClass="success, large" maxWidth="Infinity"/>
+        <Hyperlink text="Already have an account? Login" onAction="#onLoginLink" styleClass="link"/>
     </VBox>
 </StackPane>

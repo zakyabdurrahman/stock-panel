@@ -10,16 +10,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8f5dbee1-055c-4550-a1e8-74ba1d2ec14c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/tech/zaky/stockpanel/appli.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/Navigator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/Screens.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/core.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/data/core.mv.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spec.md" beforeDir="false" afterPath="$PROJECT_DIR$/spec.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/controllers/MainController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/StockPanelApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/StockPanelApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/tech/zaky/stockpanel/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/tech/zaky/stockpanel/hello-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/controllers/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/tech/zaky/stockpanel/login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/tech/zaky/stockpanel/login.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +29,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -66,14 +66,16 @@
     "Repository.Attach.Sources": "false",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/work/stock-panel/build",
-    "project.structure.last.edited": "Artifacts",
+    "last_opened_file_path": "C:/work/stock-panel",
+    "project.structure.last.edited": "SDKs",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.34827587",
-    "settings.editor.selected.configurable": "project.propCompiler"
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
   <component name="RecentsManager">

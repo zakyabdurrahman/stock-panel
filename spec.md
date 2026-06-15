@@ -173,13 +173,14 @@ Rather than manual custom colors, UI components are styled directly inside FXML 
 * **Purpose:** The core terminal window displaying live metrics, transactional histories, and asset positions.
 * **Layout Structure:** Root `BorderPane`. Top Menu Bar handles session controls. Left Sidebar holds asset listings. Center Grid tracks performance history.
 * **UI Sub-Components with AtlantaFX Classes:**
-  - **Top Menu Bar:** Implemented using an elegant native `ToolBar`. Contains a right-aligned **"Logout"** component mapped to `styleClass="button, danger, flat, left-icon"` (using a clear exit sign vector glyph symbol).
+  - **Top Menu Bar:** Implemented using a native `ToolBar`. Contains a right-aligned **"Logout"** component mapped to `styleClass="button, danger, flat, left-icon"`.
   - **Metric Summary Cards (Top Center):** A horizontal `HBox` tracking three individual data widgets wrapped in `.card` structures:
-    1. *Total Capital Injected:* Styled with `styleClass="text-muted, title-4"` for headings.
-    2. *Total Capital Gains:* Uses an interior success indicator string block tracking raw metrics.
-    3. *Net Portfolio Standing Card:* Set up as an interactive clickable button element via `styleClass="card, button, interactive"`. Leverages AtlantaFX hover styling transitions out-of-the-box.
-  - **Transaction Terminal Grid (Bottom Center):** A virtualized JavaFX `TableView`. Clean layout visibility is maintained by enforcing `styleClass="striped, bordered, compact"`.
+    1. *Total Capital Injected:* Styled with `styleClass="text-muted, title-4"` for headings. Contains a small `Button` with `styleClass="button, success, sm"` labeled **"+"** to trigger the Allocation Modal.
+    2. *Total Capital Gains:* Tracks raw return metrics. Contains a small `Button` with `styleClass="button, accent, sm"` labeled **"+"** to trigger the Returns Modal.
+    3. *Net Portfolio Standing / Gain Card:* Interactive clickable button element via `styleClass="card, button, interactive"`.
+  - **Transaction Terminal Grid (Bottom Center):** A virtualized JavaFX `TableView` enforcing `styleClass="striped, bordered, compact"`.
   - **Holdings Sidebar Inventory (Left Panel):** A dedicated `VBox` wrapper. Uses an elegant `ListView` element set to `styleClass="dense"`.
+* **Controller Logic (`DashboardController`):** Reads from `UserSession` to isolate queries. Binds transactional item collections to a dynamic JavaFX `ObservableList`. Intercepts the **"+"** button actions to programmatically launch the secondary modal input `Stage` layers using `Modality.APPLICATION_MODAL`.
 
 ### 5.4 Portfolio Detail View (`portfolio_detail.fxml`)
 * **Purpose:** Deep-dive graphical analysis screen to visualize historical wealth tracking over time.
@@ -187,6 +188,33 @@ Rather than manual custom colors, UI components are styled directly inside FXML 
 * **UI Sub-Components with AtlantaFX Classes:**
   - **Top Navigation Banner:** Features an explicit back navigation `Button` on the far left mapped to `styleClass="button, flat, body-strong"`.
   - **Main Viewport Panel:** A prominent JavaFX `LineChart<String, Number>` graph control. The chart coordinates naturally adapt to the active stylesheet framework theme colors, allowing trace series to stand out vibrantly against the dark base background.
+
+### 5.5 Quick Entry Modals (`deposit_modal.fxml` & `return_modal.fxml`)
+* **Purpose:** Focused, lightweight modal overlay windows that capture user transactional inputs securely and validate data locally before database writing.
+* **Layout Structure:** An isolated `VBox` wrapper with structural padding (`padding="20"`), utilizing a clean form sheet design pattern.
+
+#### A. Capital Allocation Modal (`deposit_modal.fxml`)
+* **UI Components:**
+  - `Label` header using `styleClass="title-3"` text reading *"Add Capital Allocation"*.
+  - `TextField` for allocation amount (`promptText="0.00"`, `styleClass="rounded"`).
+  - `DatePicker` for chronological date capture.
+  - `TextArea` for descriptive notes (`promptText="Optional allocation notes..."`, `prefHeight="80"`).
+  - An `HBox` alignment layout hosting two control buttons: **"Cancel"** (`styleClass="button, flat"`) and **"Save Allocation"** (`styleClass="button, success, raised"`).
+* **Controller Logic (`DepositModalController`):**
+  - Validates that the input amount is a positive numeric string using a regex or a `try-catch` block wrapping `new BigDecimal(text)`. If string parsing fails, it adds the `.danger` pseudo-class to the input box instantly.
+  - On submission success, maps input states directly into a new `Deposit` JPA model instance, executes `depositRepository.persist(deposit)`, appends the fresh record entity straight back into the main Dashboard's active `ObservableList`, and triggers `stage.close()`.
+
+#### B. Capital Return Modal (`return_modal.fxml`)
+* **UI Components:**
+  - `Label` header using `styleClass="title-3"` text reading *"Add Performance Return"*.
+  - `TextField` for asset identifier tracking (`promptText="e.g. AAPL"`, `styleClass="rounded"`).
+  - `ComboBox<ReturnType>` dropdown selector or an AtlantaFX alternative `ToggleGroup` switch determining asset activity framework type (`SALE` vs `DIVIDEND`).
+  - `TextField` for raw transactional currency yield (`promptText="0.00"`).
+  - `DatePicker` for execution timeline logging.
+  - Control button pairing layout containing **"Cancel"** and **"Save Return"** (`styleClass="button, accent, raised"`).
+* **Controller Logic (`ReturnModalController`):**
+  - Forces ticker string normalization into strict uppercase characters using `.toUpperCase().trim()`.
+  - Interacts directly with database layers through transactional pipelines inside `ReturnRecordRepository` and updates user index logs dynamically across local data layers without requiring manual terminal restarts.
 
 ---
 

@@ -9,13 +9,11 @@ import tech.zaky.stockpanel.Screens;
 import tech.zaky.stockpanel.models.User;
 import tech.zaky.stockpanel.repositories.UserRepository;
 
-public class LoginController {
+public class RegisterController {
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
+    @FXML private PasswordField confirmPasswordField;
     @FXML private Label errorLabel;
-
-
-
 
     private UserRepository userRepository;
     private Navigator navigator;
@@ -26,28 +24,37 @@ public class LoginController {
     }
 
     @FXML
-    private void onLogin() {
-
+    private void onRegister() {
         String username = usernameField.getText().trim();
         String password = passwordField.getText();
+        String confirmPassword = confirmPasswordField.getText();
 
-        if (username.isEmpty() || password.isEmpty()) {
-            showError("Username and password are required.");
+        if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+            showError("All fields are required.");
             return;
         }
 
-        User user = userRepository.findByUsername(username);
-        if (user == null || !user.getPassword().equals(password)) {
-            showError("Invalid username or password.");
+        if (!password.equals(confirmPassword)) {
+            showError("Passwords do not match.");
             return;
         }
 
-        // TODO: navigate to dashboard
+        if (userRepository.findByUsername(username) != null) {
+            showError("Username already exists.");
+            return;
+        }
+
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        userRepository.save(user);
+
+        navigator.navigate(Screens.LOGIN);
     }
 
     @FXML
-    private void onRegisterLink() {
-        this.navigator.navigate(Screens.REGISTER);
+    private void onLoginLink() {
+        navigator.navigate(Screens.LOGIN);
     }
 
     private void showError(String message) {

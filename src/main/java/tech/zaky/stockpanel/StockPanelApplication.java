@@ -1,8 +1,9 @@
 package tech.zaky.stockpanel;
 
 import atlantafx.base.theme.NordDark;
-import atlantafx.base.theme.PrimerDark;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -22,6 +23,7 @@ import tech.zaky.stockpanel.repositories.UserRepository;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 public class StockPanelApplication extends Application {
     Session session;
@@ -35,7 +37,7 @@ public class StockPanelApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(StockPanelApplication.class.getResource("login.fxml"));
-        stage.setMaximized(true);
+
 
 
 
@@ -44,15 +46,20 @@ public class StockPanelApplication extends Application {
         //setup css
         Application.setUserAgentStylesheet(new NordDark().getUserAgentStylesheet());
 
-        Scene scene = new Scene(fxmlLoader.load(), stage.getMaxWidth(), stage.getMaxHeight());
+        Scene scene = new Scene(fxmlLoader.load());
         scene.getStylesheets().add(StockPanelApplication.class.getResource("appli.css").toExternalForm());
 
         UserRepository userRepository = new UserRepository(session);
+        Navigator navigator = new Navigator(scene, session);
         LoginController loginController = fxmlLoader.getController();
-        loginController.setUserRepository(userRepository);
+        loginController.injectDependencies(userRepository, navigator);
+
+        //ObservableList<User> users = FXCollections.observableArrayList(new User(), new User());
+
 
         stage.setTitle("StockPanel - Portfolio Manager");
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
     }
 
