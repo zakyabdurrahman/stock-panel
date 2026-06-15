@@ -24,6 +24,11 @@ public class StockPanelApplication extends Application {
     Connection conn;
 
     @Override
+    public void stop() {
+        session.close();
+    }
+
+    @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(StockPanelApplication.class.getResource("hello-view.fxml"));
 

@@ -10,4 +10,5 @@ open module tech.zaky.stockpanel {
     exports tech.zaky.stockpanel;
     exports tech.zaky.stockpanel.models;
     exports tech.zaky.stockpanel.models.enums;
+    exports tech.zaky.stockpanel.repositories;
 }

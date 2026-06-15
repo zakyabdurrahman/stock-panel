@@ -21,11 +21,11 @@ public class Holding {
     private BigDecimal sharesCount;
 
     public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Holding setId(Long id) { this.id = id; return this; }
     public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
+    public Holding setUser(User user) { this.user = user; return this; }
     public String getTicker() { return ticker; }
-    public void setTicker(String ticker) { this.ticker = ticker; }
+    public Holding setTicker(String ticker) { this.ticker = ticker; return this; }
     public BigDecimal getSharesCount() { return sharesCount; }
-    public void setSharesCount(BigDecimal sharesCount) { this.sharesCount = sharesCount; }
+    public Holding setSharesCount(BigDecimal sharesCount) { this.sharesCount = sharesCount; return this; }
 }

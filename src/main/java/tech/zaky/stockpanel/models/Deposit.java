@@ -3,6 +3,7 @@ package tech.zaky.stockpanel.models;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "deposits")
@@ -19,18 +20,18 @@ public class Deposit {
     private BigDecimal amount;
 
     @Column(nullable = false)
-    private LocalDate depositDate;
+    private LocalDateTime depositDate;
 
     private String notes;
 
     public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Deposit setId(Long id) { this.id = id; return this; }
     public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
+    public Deposit setUser(User user) { this.user = user; return this; }
     public BigDecimal getAmount() { return amount; }
-    public void setAmount(BigDecimal amount) { this.amount = amount; }
-    public LocalDate getDepositDate() { return depositDate; }
-    public void setDepositDate(LocalDate depositDate) { this.depositDate = depositDate; }
+    public Deposit setAmount(BigDecimal amount) { this.amount = amount; return this; }
+    public LocalDateTime getDepositDate() { return depositDate; }
+    public Deposit setDepositDate(LocalDateTime depositDate) { this.depositDate = depositDate; return this; }
     public String getNotes() { return notes; }
-    public void setNotes(String notes) { this.notes = notes; }
+    public Deposit setNotes(String notes) { this.notes = notes; return this; }
 }

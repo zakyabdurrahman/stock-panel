@@ -5,6 +5,7 @@ import tech.zaky.stockpanel.models.enums.ReturnType;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "returns")
@@ -13,7 +14,7 @@ public class ReturnRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
@@ -26,18 +27,18 @@ public class ReturnRecord {
     private String ticker;
 
     @Column(nullable = false)
-    private LocalDate returnDate;
+    private LocalDateTime returnDate;
 
     public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public ReturnRecord setId(Long id) { this.id = id; return this; }
     public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
+    public ReturnRecord setUser(User user) { this.user = user; return this; }
     public BigDecimal getAmount() { return amount; }
-    public void setAmount(BigDecimal amount) { this.amount = amount; }
+    public ReturnRecord setAmount(BigDecimal amount) { this.amount = amount; return this; }
     public ReturnType getType() { return type; }
-    public void setType(ReturnType type) { this.type = type; }
+    public ReturnRecord setType(ReturnType type) { this.type = type; return this; }
     public String getTicker() { return ticker; }
-    public void setTicker(String ticker) { this.ticker = ticker != null ? ticker.toUpperCase() : null; }
-    public LocalDate getReturnDate() { return returnDate; }
-    public void setReturnDate(LocalDate returnDate) { this.returnDate = returnDate; }
+    public ReturnRecord setTicker(String ticker) { this.ticker = ticker != null ? ticker.toUpperCase() : null; return this; }
+    public LocalDateTime getReturnDate() { return returnDate; }
+    public ReturnRecord setReturnDate(LocalDateTime returnDate) { this.returnDate = returnDate; return this; }
 }
