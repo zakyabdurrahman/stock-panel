@@ -2,7 +2,7 @@
 
 A lightweight, ultra-secure native desktop application designed to track net capital allocations, realized returns (gains from selling stock), and dividends.
 
-
+![Alt](https://github.com/zakyabdurrahman/stock-panel/blob/main/screenshots/s1.png)
 
 Most mainstream retail stock trading apps (like Ajaib) only display the fluctuating value of your *current active holdings*. They fail to cleanly aggregate and show your total lifetime performance—leaving out **realized gains from stocks you've already sold** and **passive cash flow generated from dividends**.
 
