@@ -90,7 +90,7 @@ public class DashboardController {
         for (Holding h : holdingRepository.findByUserId(user.getId())) {
             holdingItems.add(h.getTicker() + " × " + h.getSharesCount().toPlainString());
         }
-        holdingsListView.setItems(FXCollections.observableArrayList(holdingItems));
+        //holdingsListView.setItems(FXCollections.observableArrayList(holdingItems));
 
         // Transaction table
         dateColumn.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().date()));
