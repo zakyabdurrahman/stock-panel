@@ -10,24 +10,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8f5dbee1-055c-4550-a1e8-74ba1d2ec14c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/controllers/DashboardController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/repositories/DepositRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/repositories/HoldingRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/repositories/ReturnRecordRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/utils/CryptoMachine.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/utils/NumberFormatter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/utils/UserSession.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/tech/zaky/stockpanel/dashboard.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/Navigator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/Navigator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/Screens.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/Screens.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/controllers/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/controllers/RegisterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/controllers/RegisterController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/tech/zaky/stockpanel/login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/tech/zaky/stockpanel/login.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/tech/zaky/stockpanel/register.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/tech/zaky/stockpanel/register.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TODO.md" beforeDir="false" afterPath="$PROJECT_DIR$/TODO.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/controllers/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/controllers/DashboardController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

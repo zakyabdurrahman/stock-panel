@@ -2,6 +2,8 @@ package tech.zaky.stockpanel.controllers;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -40,11 +42,13 @@ public class DashboardController {
     @FXML private TableColumn<TransactionRow, String> amountColumn;
     @FXML private TableColumn<TransactionRow, String> notesColumn;
     @FXML private TableColumn<TransactionRow, Void> actionColumn;
+    private ObservableList<TransactionRow> transactions;
 
     private DepositRepository depositRepository;
     private ReturnRecordRepository returnRecordRepository;
     private HoldingRepository holdingRepository;
     private Navigator navigator;
+    private final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     public void injectDependencies(DepositRepository depositRepository,
                                    ReturnRecordRepository returnRecordRepository,
@@ -57,19 +61,29 @@ public class DashboardController {
         loadData();
     }
 
+
+    private void updateCards() {
+        BigDecimal totalDepositAmount = transactions.stream()
+                .filter(t -> t.entityType() == EntityType.DEPOSIT)
+                .map(TransactionRow::amount)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        BigDecimal totalReturnAmount = transactions.stream()
+                .filter(t -> t.entityType() == EntityType.RETURN)
+                .map(TransactionRow::amount)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        BigDecimal net = totalReturnAmount.subtract(totalDepositAmount);
+
+        totalDepositsLabel.setText("IDR " + NumberFormatter.formatBigDecimal(totalDepositAmount));
+        totalReturnsLabel.setText("IDR " + NumberFormatter.formatBigDecimal(totalReturnAmount));
+        netStandingLabel.setText("IDR " + NumberFormatter.formatBigDecimal(net));
+        netStandingLabel.setStyle("-fx-text-fill: " + (net.signum() < 0 ? "#e74c3c" : "#2ecc71") + ";");
+    }
+
     private void loadData() {
         User user = UserSession.get();
         welcomeLabel.setText("Hello, " + user.getUsername());
-
-        // Metrics
-        BigDecimal totalDeposits =  depositRepository.sumByUserId(user.getId());
-        BigDecimal totalReturns = returnRecordRepository.sumByUserId(user.getId());
-        BigDecimal net = totalReturns.subtract(totalDeposits);
-
-        totalDepositsLabel.setText("IDR " + NumberFormatter.formatBigDecimal(totalDeposits));
-        totalReturnsLabel.setText("IDR " + NumberFormatter.formatBigDecimal(totalReturns));
-        netStandingLabel.setText("IDR " + NumberFormatter.formatBigDecimal(net));
-        netStandingLabel.setStyle("-fx-text-fill: " + (net.signum() < 0 ? "#e74c3c" : "#2ecc71") + ";");
 
         // Holdings sidebar
         List<String> holdingItems = new java.util.ArrayList<>();
@@ -80,8 +94,8 @@ public class DashboardController {
 
         // Transaction table
         dateColumn.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().date()));
-        typeColumn.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().type()));
-        amountColumn.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().amount()));
+        typeColumn.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().entityType().getString()));
+        amountColumn.setCellValueFactory(c -> new SimpleStringProperty("IDR " + NumberFormatter.formatBigDecimal(c.getValue().amount())));
         notesColumn.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().details()));
 
         actionColumn.setCellFactory(col -> new TableCell<>() {
@@ -91,9 +105,9 @@ public class DashboardController {
                 deleteBtn.getStyleClass().add("flat");
                 deleteBtn.setOnAction(e -> {
                     TransactionRow row = getTableView().getItems().get(getIndex());
-                    if ("DEPOSIT".equals(row.entityType())) depositRepository.delete(row.id());
+                    if (row.entityType() == EntityType.DEPOSIT) depositRepository.delete(row.id());
                     else returnRecordRepository.delete(row.id());
-                    loadData();
+                    transactions.remove(row);
                 });
             }
             @Override
@@ -103,16 +117,24 @@ public class DashboardController {
             }
         });
 
-        List<TransactionRow> transactions = new java.util.ArrayList<>();
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        this.transactions = FXCollections.observableArrayList();
+
         for (Deposit d : depositRepository.findByUserId(user.getId())) {
-            transactions.add(new TransactionRow(d.getId(), "DEPOSIT", d.getDepositDate().format(fmt), "DEPOSIT", "IDR " + NumberFormatter.formatBigDecimal(d.getAmount()), d.getNotes() != null ? d.getNotes() : ""));
+            transactions.add(new TransactionRow(d.getId(), EntityType.DEPOSIT, d.getDepositDate().format(dateFormat), d.getAmount(), d.getNotes() != null ? d.getNotes() : ""));
         }
         for (ReturnRecord r : returnRecordRepository.findByUserId(user.getId())) {
             String details = (r.getTicker() != null ? r.getTicker() + " " : "") + r.getType();
-            transactions.add(new TransactionRow(r.getId(), "RETURN", r.getReturnDate().format(fmt), "RETURN", "IDR " + NumberFormatter.formatBigDecimal(r.getAmount()), details));
+            transactions.add(new TransactionRow(r.getId(), EntityType.RETURN, r.getReturnDate().format(dateFormat), r.getAmount(), details));
         }
-        transactionTable.setItems(FXCollections.observableArrayList(transactions));
+        transactionTable.setItems(this.transactions);
+
+        transactions.addListener(new ListChangeListener<TransactionRow>() {
+            @Override
+            public void onChanged(Change<? extends TransactionRow> c) {
+                updateCards();
+            }
+        });
+        updateCards();
     }
 
     @FXML
@@ -154,7 +176,9 @@ public class DashboardController {
                         .setNotes(notesArea.getText().trim());
                 depositRepository.save(deposit);
                 modal.close();
-                loadData();
+
+                transactions.add(new TransactionRow(deposit.getId(), EntityType.DEPOSIT, deposit.getDepositDate().format(dateFormat), deposit.getAmount(), deposit.getNotes() != null ? deposit.getNotes() : ""));
+
             } catch (NumberFormatException ex) {
                 amountField.getStyleClass().add("danger");
                 errorLabel.setText("Enter a valid positive amount.");
@@ -177,7 +201,7 @@ public class DashboardController {
         modal.setTitle("Add Performance Return");
 
         TextField tickerField = new TextField();
-        tickerField.setPromptText("e.g. AAPL");
+        tickerField.setPromptText("e.g ADRO (Sale)");
         ComboBox<ReturnType> typeCombo = new ComboBox<>(FXCollections.observableArrayList(ReturnType.values()));
         typeCombo.setValue(ReturnType.SALE);
         TextField amountField = new TextField();
@@ -205,7 +229,8 @@ public class DashboardController {
                         .setReturnDate(datePicker.getValue().atStartOfDay());
                 returnRecordRepository.save(record);
                 modal.close();
-                loadData();
+                String details = (record.getTicker() != null ? record.getTicker() + " " : "") + record.getType();
+                transactions.add(new TransactionRow(record.getId(), EntityType.RETURN, record.getReturnDate().format(dateFormat), record.getAmount(), details));
             } catch (NumberFormatException ex) {
                 amountField.getStyleClass().add("danger");
                 errorLabel.setText("Enter a valid positive amount.");
@@ -219,7 +244,23 @@ public class DashboardController {
 
         modal.setScene(new Scene(layout, 380, 360));
         modal.showAndWait();
+
     }
 
-    public record TransactionRow(Long id, String entityType, String date, String type, String amount, String details) {}
+    public record TransactionRow(Long id, EntityType entityType, String date, BigDecimal amount, String details) {}
+
+    public enum EntityType {
+        RETURN("Return"),
+        DEPOSIT("Deposit");
+
+        private final String type;
+
+        EntityType(String type) {
+            this.type = type;
+        }
+
+        public String getString() {
+            return this.type;
+        }
+    }
 }

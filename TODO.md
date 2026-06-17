@@ -1,4 +1,2 @@
 # Todo  
-- make login page
-- make register page
-- make register function
+- make text update method (for the dashboard cards) that will be listening to listchange
