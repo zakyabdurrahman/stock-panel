@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="tech.zaky.stockpanel.controllers.DashboardController">
+
+    <!-- Top ToolBar -->
+    <top>
+        <ToolBar>
+            <VBox>
+                <padding>
+                    <Insets left="16"/>
+                </padding>
+                <Label text="StockPanel" styleClass="title-3"/>
+            </VBox>
+
+            <Pane HBox.hgrow="ALWAYS">
+
+            </Pane>
+            <Label fx:id="welcomeLabel" styleClass="text-muted"/>
+            <Button text="Logout" onAction="#onLogout" styleClass="danger, flat"/>
+        </ToolBar>
+    </top>
+
+    <!-- Left: Holdings Sidebar -->
+    <left>
+        <VBox spacing="8" prefWidth="220">
+            <padding>
+                <Insets top="16" right="8" bottom="16" left="16"/>
+            </padding>
+            <Label text="Holdings" styleClass="title-4"/>
+            <ListView fx:id="holdingsListView" styleClass="dense" VBox.vgrow="ALWAYS"/>
+        </VBox>
+    </left>
+
+    <!-- Center: Metrics + Transaction Table -->
+    <center>
+        <VBox spacing="16">
+            <padding>
+                <Insets top="16" right="16" bottom="16" left="16"/>
+            </padding>
+
+            <!-- Metric Cards -->
+            <HBox spacing="16">
+                <!-- Total Capital -->
+                <VBox styleClass="card" spacing="4" HBox.hgrow="ALWAYS">
+                    <padding>
+                        <Insets top="16" right="16" bottom="16" left="16"/>
+                    </padding>
+                    <Label text="Total Capital Injected" styleClass="text-muted, title-4"/>
+                    <Label fx:id="totalDepositsLabel" styleClass="title-2"/>
+                    <Button text="+" onAction="#onAddDeposit" styleClass="success, sm"/>
+                </VBox>
+
+                <!-- Total Returns -->
+                <VBox styleClass="card" spacing="4" HBox.hgrow="ALWAYS">
+                    <padding>
+                        <Insets top="16" right="16" bottom="16" left="16"/>
+                    </padding>
+                    <Label text="Total Capital Gains" styleClass="text-muted, title-4"/>
+                    <Label fx:id="totalReturnsLabel" styleClass="title-2"/>
+                    <Button text="+" onAction="#onAddReturn" styleClass="accent, sm"/>
+                </VBox>
+
+                <!-- Net Standing -->
+                <VBox styleClass="card, interactive" spacing="4" HBox.hgrow="ALWAYS">
+                    <padding>
+                        <Insets top="16" right="16" bottom="16" left="16"/>
+                    </padding>
+                    <Label text="Net Portfolio Standing" styleClass="text-muted, title-4"/>
+                    <Label fx:id="netStandingLabel" styleClass="title-2"/>
+                </VBox>
+            </HBox>
+
+            <!-- Transaction Table -->
+            <TableView fx:id="transactionTable" styleClass="striped, bordered, compact" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="dateColumn" text="Date" prefWidth="120"/>
+                    <TableColumn fx:id="typeColumn" text="Type" prefWidth="100"/>
+                    <TableColumn fx:id="amountColumn" text="Amount" prefWidth="120"/>
+                    <TableColumn fx:id="notesColumn" text="Details" prefWidth="200"/>
+                    <TableColumn fx:id="actionColumn" text="" prefWidth="80"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane>

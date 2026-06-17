@@ -33,7 +33,7 @@
 
         <Label fx:id="errorLabel" styleClass="text-danger" visible="false" managed="false"/>
 
-        <Button text="Login" onAction="#onLogin" styleClass="accent, raised" maxWidth="Infinity"/>
+        <Button style="-fx-cursor: hand;" text="Login" onAction="#onLogin" styleClass="accent, raised" maxWidth="Infinity"/>
         <Hyperlink text="Create an account" onAction="#onRegisterLink" styleClass="link"/>
     </VBox>
 </StackPane>

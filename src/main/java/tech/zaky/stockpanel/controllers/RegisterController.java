@@ -8,6 +8,7 @@ import tech.zaky.stockpanel.Navigator;
 import tech.zaky.stockpanel.Screens;
 import tech.zaky.stockpanel.models.User;
 import tech.zaky.stockpanel.repositories.UserRepository;
+import tech.zaky.stockpanel.utils.CryptoMachine;
 
 public class RegisterController {
     @FXML private TextField usernameField;
@@ -45,8 +46,10 @@ public class RegisterController {
         }
 
         User user = new User();
-        user.setUsername(username);
-        user.setPassword(password);
+        user.setUsername(username.trim());
+
+        String hashedpw = CryptoMachine.hashPassword(password);
+        user.setPassword(hashedpw);
         userRepository.save(user);
 
         navigator.navigate(Screens.LOGIN);

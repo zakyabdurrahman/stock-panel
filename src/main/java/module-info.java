@@ -5,6 +5,7 @@ open module tech.zaky.stockpanel {
     requires java.sql;
     requires java.naming;
     requires atlantafx.base;
+    requires jbcrypt;
 
 
     exports tech.zaky.stockpanel;

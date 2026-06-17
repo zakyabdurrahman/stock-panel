@@ -4,9 +4,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import org.hibernate.Session;
+import tech.zaky.stockpanel.controllers.DashboardController;
 import tech.zaky.stockpanel.controllers.LoginController;
 import tech.zaky.stockpanel.controllers.RegisterController;
+import tech.zaky.stockpanel.repositories.DepositRepository;
+import tech.zaky.stockpanel.repositories.HoldingRepository;
+import tech.zaky.stockpanel.repositories.ReturnRecordRepository;
 import tech.zaky.stockpanel.repositories.UserRepository;
+import tech.zaky.stockpanel.utils.UserSession;
 
 import java.io.IOException;
 
@@ -24,6 +29,7 @@ public class Navigator {
             switch (screen) {
                 case LOGIN -> loadLogin();
                 case REGISTER -> loadRegister();
+                case DASHBOARD -> loadDashboard();
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -36,6 +42,7 @@ public class Navigator {
         primaryScene.setRoot(root);
         LoginController controller = loader.getController();
         controller.injectDependencies(new UserRepository(session), this);
+        UserSession.clear();
 
     }
 
@@ -49,5 +56,17 @@ public class Navigator {
         controller.injectDependencies(new UserRepository(session), this);
 
 
+    }
+
+    private void loadDashboard() throws IOException {
+        FXMLLoader loader = new FXMLLoader(StockPanelApplication.class.getResource("dashboard.fxml"));
+        Pane root = loader.load();
+        primaryScene.setRoot(root);
+        DashboardController controller = loader.getController();
+        controller.injectDependencies(
+                new DepositRepository(session),
+                new ReturnRecordRepository(session),
+                new HoldingRepository(session),
+                this);
     }
 }

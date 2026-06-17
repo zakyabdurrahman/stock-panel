@@ -34,7 +34,7 @@
 
         <Label fx:id="errorLabel" styleClass="text-danger" visible="false" managed="false"/>
 
-        <Button text="Register" onAction="#onRegister" styleClass="success, large" maxWidth="Infinity"/>
+        <Button style="-fx-cursor: hand;" text="Register" onAction="#onRegister" styleClass="success, large" maxWidth="Infinity"/>
         <Hyperlink text="Already have an account? Login" onAction="#onLoginLink" styleClass="link"/>
     </VBox>
 </StackPane>

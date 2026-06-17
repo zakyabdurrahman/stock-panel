@@ -10,7 +10,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8f5dbee1-055c-4550-a1e8-74ba1d2ec14c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/controllers/DashboardController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/repositories/DepositRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/repositories/HoldingRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/repositories/ReturnRecordRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/utils/CryptoMachine.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/utils/NumberFormatter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/utils/UserSession.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/tech/zaky/stockpanel/dashboard.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/Navigator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/Navigator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/Screens.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/Screens.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/controllers/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/controllers/RegisterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/controllers/RegisterController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/tech/zaky/stockpanel/login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/tech/zaky/stockpanel/login.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/tech/zaky/stockpanel/register.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/tech/zaky/stockpanel/register.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,8 +37,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -64,7 +81,7 @@
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/work/stock-panel&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/work/stockpanel&quot;,
     &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.34827587&quot;,

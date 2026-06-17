@@ -4,10 +4,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import org.mindrot.jbcrypt.BCrypt;
 import tech.zaky.stockpanel.Navigator;
 import tech.zaky.stockpanel.Screens;
 import tech.zaky.stockpanel.models.User;
 import tech.zaky.stockpanel.repositories.UserRepository;
+import tech.zaky.stockpanel.utils.CryptoMachine;
+import tech.zaky.stockpanel.utils.UserSession;
 
 public class LoginController {
     @FXML private TextField usernameField;
@@ -37,12 +40,15 @@ public class LoginController {
         }
 
         User user = userRepository.findByUsername(username);
-        if (user == null || !user.getPassword().equals(password)) {
+        System.out.println(user);
+        if (user == null || !CryptoMachine.checkPassword(password, user.getPassword())) {
             showError("Invalid username or password.");
             return;
         }
 
-        // TODO: navigate to dashboard
+
+        UserSession.set(user);
+        navigator.navigate(Screens.DASHBOARD);
     }
 
     @FXML
