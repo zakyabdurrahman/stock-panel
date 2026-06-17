@@ -80,7 +80,7 @@
                     <padding>
                         <Insets top="16" right="16" bottom="16" left="16"/>
                     </padding>
-                    <Label text="Net Portfolio Standing" styleClass="text-muted, title-4"/>
+                    <Label text="Net Portfolio Gains" styleClass="text-muted, title-4"/>
                     <Label fx:id="netStandingLabel" styleClass="title-2"/>
                 </VBox>
             </HBox>
