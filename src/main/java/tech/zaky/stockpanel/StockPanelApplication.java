@@ -37,10 +37,7 @@ public class StockPanelApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(StockPanelApplication.class.getResource("login.fxml"));
-
-
-
-
+        
         //setup db session
         setupSession();
         //setup css

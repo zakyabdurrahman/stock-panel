@@ -8,11 +8,13 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import tech.zaky.stockpanel.Navigator;
 import tech.zaky.stockpanel.Screens;
+import tech.zaky.stockpanel.components.FormattedDatePicker;
 import tech.zaky.stockpanel.models.Deposit;
 import tech.zaky.stockpanel.models.Holding;
 import tech.zaky.stockpanel.models.ReturnRecord;
@@ -61,6 +63,38 @@ public class DashboardController {
         loadData();
     }
 
+
+    private void applyCurrencyFormat(TextField field) {
+        field.setTextFormatter(new TextFormatter<>(change -> {
+            String newText = change.getControlNewText().replace(".", "");
+            if (!newText.matches("\\d*")) return null;
+            if (newText.isEmpty()) {
+                change.setText("");
+                change.setRange(0, change.getControlText().length());
+                change.setCaretPosition(0);
+                change.setAnchor(0);
+                return change;
+            }
+            String formatted = formatWithDots(newText);
+            change.setText(formatted);
+            change.setRange(0, change.getControlText().length());
+            change.setCaretPosition(formatted.length());
+            change.setAnchor(formatted.length());
+            return change;
+        }));
+    }
+
+    private String formatWithDots(String digits) {
+        StringBuilder sb = new StringBuilder(digits);
+        for (int i = sb.length() - 3; i > 0; i -= 3) {
+            sb.insert(i, '.');
+        }
+        return sb.toString();
+    }
+
+    private BigDecimal parseAmountField(TextField field) {
+        return new BigDecimal(field.getText().replace(".", ""));
+    }
 
     private void updateCards() {
         BigDecimal totalDepositAmount = transactions.stream()
@@ -143,6 +177,8 @@ public class DashboardController {
         navigator.navigate(Screens.LOGIN);
     }
 
+
+
     @FXML
     private void onAddDeposit() {
         Stage modal = new Stage();
@@ -150,8 +186,10 @@ public class DashboardController {
         modal.setTitle("Add Capital Allocation");
 
         TextField amountField = new TextField();
-        amountField.setPromptText("0.00");
-        DatePicker datePicker = new DatePicker(LocalDate.now());
+        amountField.setPromptText("0");
+        applyCurrencyFormat(amountField);
+        FormattedDatePicker datePicker = new FormattedDatePicker(LocalDate.now());
+
         TextArea notesArea = new TextArea();
         notesArea.setPromptText("Optional allocation notes...");
         notesArea.setPrefHeight(80);
@@ -167,7 +205,7 @@ public class DashboardController {
 
         saveBtn.setOnAction(e -> {
             try {
-                BigDecimal amount = new BigDecimal(amountField.getText().trim());
+                BigDecimal amount = parseAmountField(amountField);
                 if (amount.compareTo(BigDecimal.ZERO) <= 0) throw new NumberFormatException();
                 Deposit deposit = new Deposit()
                         .setUser(UserSession.get())
@@ -205,8 +243,9 @@ public class DashboardController {
         ComboBox<ReturnType> typeCombo = new ComboBox<>(FXCollections.observableArrayList(ReturnType.values()));
         typeCombo.setValue(ReturnType.SALE);
         TextField amountField = new TextField();
-        amountField.setPromptText("0.00");
-        DatePicker datePicker = new DatePicker(LocalDate.now());
+        amountField.setPromptText("0");
+        applyCurrencyFormat(amountField);
+        FormattedDatePicker datePicker = new FormattedDatePicker(LocalDate.now());
         Label errorLabel = new Label();
         errorLabel.getStyleClass().add("text-danger");
         errorLabel.setVisible(false);
@@ -219,7 +258,7 @@ public class DashboardController {
 
         saveBtn.setOnAction(e -> {
             try {
-                BigDecimal amount = new BigDecimal(amountField.getText().trim());
+                BigDecimal amount = parseAmountField(amountField);
                 if (amount.compareTo(BigDecimal.ZERO) <= 0) throw new NumberFormatException();
                 ReturnRecord record = new ReturnRecord()
                         .setUser(UserSession.get())
@@ -239,7 +278,7 @@ public class DashboardController {
         });
 
         VBox layout = new VBox(12, new Label("Add Performance Return") {{ getStyleClass().add("title-3"); }},
-                tickerField, typeCombo, amountField, datePicker, errorLabel, new javafx.scene.layout.HBox(8, cancelBtn, saveBtn));
+                amountField, typeCombo,  tickerField, datePicker, errorLabel, new javafx.scene.layout.HBox(8, cancelBtn, saveBtn));
         layout.setPadding(new Insets(20));
 
         modal.setScene(new Scene(layout, 380, 360));
