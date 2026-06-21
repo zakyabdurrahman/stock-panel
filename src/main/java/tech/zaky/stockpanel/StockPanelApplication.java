@@ -2,8 +2,7 @@ package tech.zaky.stockpanel;
 
 import atlantafx.base.theme.NordDark;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -19,6 +18,7 @@ import tech.zaky.stockpanel.models.Holding;
 import tech.zaky.stockpanel.models.ReturnRecord;
 import tech.zaky.stockpanel.models.User;
 import tech.zaky.stockpanel.repositories.UserRepository;
+import tech.zaky.stockpanel.utils.CryptoMachine;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -37,7 +37,7 @@ public class StockPanelApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(StockPanelApplication.class.getResource("login.fxml"));
-        
+        CryptoMachine.hashPassword("AAAA");
         //setup db session
         setupSession();
         //setup css
