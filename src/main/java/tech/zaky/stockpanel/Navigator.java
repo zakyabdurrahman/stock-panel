@@ -6,6 +6,7 @@ import javafx.scene.layout.Pane;
 import org.hibernate.Session;
 import tech.zaky.stockpanel.controllers.DashboardController;
 import tech.zaky.stockpanel.controllers.LoginController;
+import tech.zaky.stockpanel.controllers.PortfolioDetailController;
 import tech.zaky.stockpanel.controllers.RegisterController;
 import tech.zaky.stockpanel.repositories.DepositRepository;
 import tech.zaky.stockpanel.repositories.HoldingRepository;
@@ -30,6 +31,7 @@ public class Navigator {
                 case LOGIN -> loadLogin();
                 case REGISTER -> loadRegister();
                 case DASHBOARD -> loadDashboard();
+                case PORTFOLIO_DETAIL -> loadPortfolioDetail();
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -67,6 +69,17 @@ public class Navigator {
                 new DepositRepository(session),
                 new ReturnRecordRepository(session),
                 new HoldingRepository(session),
+                this);
+    }
+
+    private void loadPortfolioDetail() throws IOException {
+        FXMLLoader loader = new FXMLLoader(StockPanelApplication.class.getResource("portfolio_detail.fxml"));
+        Pane root = loader.load();
+        primaryScene.setRoot(root);
+        PortfolioDetailController controller = loader.getController();
+        controller.injectDependencies(
+                new DepositRepository(session),
+                new ReturnRecordRepository(session),
                 this);
     }
 }

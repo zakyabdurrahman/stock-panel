@@ -10,10 +10,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8f5dbee1-055c-4550-a1e8-74ba1d2ec14c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/components/FormattedDatePicker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/StockPanelApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/StockPanelApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/Navigator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/Navigator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/Screens.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/Screens.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/controllers/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tech/zaky/stockpanel/controllers/DashboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/tech/zaky/stockpanel/dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/tech/zaky/stockpanel/dashboard.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,13 +36,6 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
-  </component>
-  <component name="MavenImportPreferences">
-    <option name="generalSettings">
-      <MavenGeneralSettings>
-        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
-      </MavenGeneralSettings>
-    </option>
   </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="ProjectErrors" />

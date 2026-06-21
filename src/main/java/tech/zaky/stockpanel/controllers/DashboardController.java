@@ -177,6 +177,11 @@ public class DashboardController {
         navigator.navigate(Screens.LOGIN);
     }
 
+    @FXML
+    private void onViewChart() {
+        navigator.navigate(Screens.PORTFOLIO_DETAIL);
+    }
+
 
 
     @FXML

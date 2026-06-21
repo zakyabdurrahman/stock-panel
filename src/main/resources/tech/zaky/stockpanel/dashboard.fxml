@@ -82,6 +82,7 @@
                     </padding>
                     <Label text="Net Portfolio Gains" styleClass="text-muted, title-4"/>
                     <Label fx:id="netStandingLabel" styleClass="title-2"/>
+                    <Button text="📈" onAction="#onViewChart" styleClass="flat, sm" style="-fx-font-size: 18;"/>
                 </VBox>
             </HBox>
 

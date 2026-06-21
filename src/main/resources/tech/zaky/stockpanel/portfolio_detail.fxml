@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="tech.zaky.stockpanel.controllers.PortfolioDetailController">
+    <top>
+        <Button text="← Back to Dashboard" onAction="#onBack">
+            <BorderPane.margin>
+                <Insets top="10" left="10"/>
+            </BorderPane.margin>
+        </Button>
+    </top>
+    <center>
+        <LineChart fx:id="chart" title="Portfolio Value Over Time">
+            <xAxis><CategoryAxis label="Date"/></xAxis>
+            <yAxis><NumberAxis label="Value"/></yAxis>
+        </LineChart>
+    </center>
+</BorderPane>
