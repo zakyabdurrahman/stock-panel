@@ -32,6 +32,16 @@ public class DepositRepository {
         session.getTransaction().commit();
     }
 
+    public Deposit findById(Long id) {
+        return session.find(Deposit.class, id);
+    }
+
+    public void update(Deposit deposit) {
+        session.beginTransaction();
+        session.merge(deposit);
+        session.getTransaction().commit();
+    }
+
     public void delete(Long id) {
         session.beginTransaction();
         Deposit d = session.find(Deposit.class, id);

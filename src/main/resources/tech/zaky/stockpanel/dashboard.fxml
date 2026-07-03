@@ -93,7 +93,7 @@
                     <TableColumn fx:id="typeColumn" text="Type" prefWidth="100"/>
                     <TableColumn fx:id="amountColumn" text="Amount" prefWidth="120"/>
                     <TableColumn fx:id="notesColumn" text="Details" prefWidth="200"/>
-                    <TableColumn fx:id="actionColumn" text="" prefWidth="80"/>
+                    <TableColumn fx:id="actionColumn" text="" prefWidth="140"/>
                 </columns>
             </TableView>
         </VBox>

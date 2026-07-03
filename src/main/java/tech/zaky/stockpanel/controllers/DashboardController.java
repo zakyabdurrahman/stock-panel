@@ -16,7 +16,6 @@ import tech.zaky.stockpanel.Navigator;
 import tech.zaky.stockpanel.Screens;
 import tech.zaky.stockpanel.components.FormattedDatePicker;
 import tech.zaky.stockpanel.models.Deposit;
-import tech.zaky.stockpanel.models.Holding;
 import tech.zaky.stockpanel.models.ReturnRecord;
 import tech.zaky.stockpanel.models.User;
 import tech.zaky.stockpanel.models.enums.ReturnType;
@@ -37,7 +36,6 @@ public class DashboardController {
     @FXML private Label totalDepositsLabel;
     @FXML private Label totalReturnsLabel;
     @FXML private Label netStandingLabel;
-    @FXML private ListView<String> holdingsListView;
     @FXML private TableView<TransactionRow> transactionTable;
     @FXML private TableColumn<TransactionRow, String> dateColumn;
     @FXML private TableColumn<TransactionRow, String> typeColumn;
@@ -119,13 +117,6 @@ public class DashboardController {
         User user = UserSession.get();
         welcomeLabel.setText("Hello, " + user.getUsername());
 
-        // Holdings sidebar
-        List<String> holdingItems = new java.util.ArrayList<>();
-        for (Holding h : holdingRepository.findByUserId(user.getId())) {
-            holdingItems.add(h.getTicker() + " × " + h.getSharesCount().toPlainString());
-        }
-        //holdingsListView.setItems(FXCollections.observableArrayList(holdingItems));
-
         // Transaction table
         dateColumn.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().date()));
         typeColumn.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().entityType().getString()));
@@ -133,10 +124,18 @@ public class DashboardController {
         notesColumn.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().details()));
 
         actionColumn.setCellFactory(col -> new TableCell<>() {
+            private final Button editBtn = new Button("Edit");
             private final Button deleteBtn = new Button("Delete");
+            private final javafx.scene.layout.HBox box = new javafx.scene.layout.HBox(4, editBtn, deleteBtn);
             {
+                editBtn.getStyleClass().add("flat");
                 deleteBtn.setStyle("-fx-text-fill: #e74c3c;");
                 deleteBtn.getStyleClass().add("flat");
+                editBtn.setOnAction(e -> {
+                    TransactionRow row = getTableView().getItems().get(getIndex());
+                    if (row.entityType() == EntityType.DEPOSIT) onEditDeposit(row);
+                    else onEditReturn(row);
+                });
                 deleteBtn.setOnAction(e -> {
                     TransactionRow row = getTableView().getItems().get(getIndex());
                     if (row.entityType() == EntityType.DEPOSIT) depositRepository.delete(row.id());
@@ -147,7 +146,7 @@ public class DashboardController {
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                setGraphic(empty ? null : deleteBtn);
+                setGraphic(empty ? null : box);
             }
         });
 
@@ -163,8 +162,13 @@ public class DashboardController {
         transactionTable.setItems(this.transactions);
 
         transactions.addListener(new ListChangeListener<TransactionRow>() {
+
+
             @Override
             public void onChanged(Change<? extends TransactionRow> c) {
+                transactions.removeListener(this);
+                FXCollections.sort(transactions, (a, b) -> a.date().compareTo(b.date()));
+                transactions.addListener(this);
                 updateCards();
             }
         });
@@ -289,6 +293,124 @@ public class DashboardController {
         modal.setScene(new Scene(layout, 380, 360));
         modal.showAndWait();
 
+    }
+
+    private void onEditDeposit(TransactionRow row) {
+        Deposit deposit = depositRepository.findById(row.id());
+        if (deposit == null) return;
+
+        Stage modal = new Stage();
+        modal.initModality(Modality.APPLICATION_MODAL);
+        modal.setTitle("Edit Capital Allocation");
+
+        TextField amountField = new TextField();
+        amountField.setPromptText("0");
+        applyCurrencyFormat(amountField);
+        amountField.setText(formatWithDots(deposit.getAmount().toBigInteger().toString()));
+
+        FormattedDatePicker datePicker = new FormattedDatePicker(deposit.getDepositDate().toLocalDate());
+
+        TextArea notesArea = new TextArea();
+        notesArea.setPromptText("Optional allocation notes...");
+        notesArea.setPrefHeight(80);
+        notesArea.setText(deposit.getNotes() != null ? deposit.getNotes() : "");
+
+        Label errorLabel = new Label();
+        errorLabel.getStyleClass().add("text-danger");
+        errorLabel.setVisible(false);
+
+        Button saveBtn = new Button("Update Allocation");
+        saveBtn.getStyleClass().addAll("success", "raised");
+        Button cancelBtn = new Button("Cancel");
+        cancelBtn.getStyleClass().add("flat");
+        cancelBtn.setOnAction(e -> modal.close());
+
+        saveBtn.setOnAction(e -> {
+            try {
+                BigDecimal amount = parseAmountField(amountField);
+                if (amount.compareTo(BigDecimal.ZERO) <= 0) throw new NumberFormatException();
+                deposit.setAmount(amount)
+                        .setDepositDate(datePicker.getValue().atStartOfDay())
+                        .setNotes(notesArea.getText().trim());
+                depositRepository.update(deposit);
+                modal.close();
+
+                int index = transactions.indexOf(row);
+                transactions.set(index, new TransactionRow(row.id(), EntityType.DEPOSIT, deposit.getDepositDate().format(dateFormat), deposit.getAmount(), deposit.getNotes() != null ? deposit.getNotes() : ""));
+            } catch (NumberFormatException ex) {
+                amountField.getStyleClass().add("danger");
+                errorLabel.setText("Enter a valid positive amount.");
+                errorLabel.setVisible(true);
+            }
+        });
+
+        VBox layout = new VBox(12, new Label("Edit Capital Allocation") {{ getStyleClass().add("title-3"); }},
+                amountField, datePicker, notesArea, errorLabel, new javafx.scene.layout.HBox(8, cancelBtn, saveBtn));
+        layout.setPadding(new Insets(20));
+
+        modal.setScene(new Scene(layout, 380, 340));
+        modal.showAndWait();
+    }
+
+    private void onEditReturn(TransactionRow row) {
+        ReturnRecord record = returnRecordRepository.findById(row.id());
+        if (record == null) return;
+
+        Stage modal = new Stage();
+        modal.initModality(Modality.APPLICATION_MODAL);
+        modal.setTitle("Edit Performance Return");
+
+        TextField tickerField = new TextField();
+        tickerField.setPromptText("e.g ADRO (Sale)");
+        tickerField.setText(record.getTicker() != null ? record.getTicker() : "");
+
+        ComboBox<ReturnType> typeCombo = new ComboBox<>(FXCollections.observableArrayList(ReturnType.values()));
+        typeCombo.setValue(record.getType());
+
+        TextField amountField = new TextField();
+        amountField.setPromptText("0");
+        applyCurrencyFormat(amountField);
+        amountField.setText(formatWithDots(record.getAmount().toBigInteger().toString()));
+
+        FormattedDatePicker datePicker = new FormattedDatePicker(record.getReturnDate().toLocalDate());
+
+        Label errorLabel = new Label();
+        errorLabel.getStyleClass().add("text-danger");
+        errorLabel.setVisible(false);
+
+        Button saveBtn = new Button("Update Return");
+        saveBtn.getStyleClass().addAll("accent", "raised");
+        Button cancelBtn = new Button("Cancel");
+        cancelBtn.getStyleClass().add("flat");
+        cancelBtn.setOnAction(e -> modal.close());
+
+        saveBtn.setOnAction(e -> {
+            try {
+                BigDecimal amount = parseAmountField(amountField);
+                if (amount.compareTo(BigDecimal.ZERO) <= 0) throw new NumberFormatException();
+                record.setAmount(amount)
+                        .setTicker(tickerField.getText().trim().toUpperCase())
+                        .setType(typeCombo.getValue())
+                        .setReturnDate(datePicker.getValue().atStartOfDay());
+                returnRecordRepository.update(record);
+                modal.close();
+
+                String details = (record.getTicker() != null ? record.getTicker() + " " : "") + record.getType();
+                int index = transactions.indexOf(row);
+                transactions.set(index, new TransactionRow(row.id(), EntityType.RETURN, record.getReturnDate().format(dateFormat), record.getAmount(), details));
+            } catch (NumberFormatException ex) {
+                amountField.getStyleClass().add("danger");
+                errorLabel.setText("Enter a valid positive amount.");
+                errorLabel.setVisible(true);
+            }
+        });
+
+        VBox layout = new VBox(12, new Label("Edit Performance Return") {{ getStyleClass().add("title-3"); }},
+                amountField, typeCombo, tickerField, datePicker, errorLabel, new javafx.scene.layout.HBox(8, cancelBtn, saveBtn));
+        layout.setPadding(new Insets(20));
+
+        modal.setScene(new Scene(layout, 380, 360));
+        modal.showAndWait();
     }
 
     public record TransactionRow(Long id, EntityType entityType, String date, BigDecimal amount, String details) {}

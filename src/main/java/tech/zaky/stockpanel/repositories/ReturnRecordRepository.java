@@ -32,6 +32,16 @@ public class ReturnRecordRepository {
         session.getTransaction().commit();
     }
 
+    public ReturnRecord findById(Long id) {
+        return session.find(ReturnRecord.class, id);
+    }
+
+    public void update(ReturnRecord record) {
+        session.beginTransaction();
+        session.merge(record);
+        session.getTransaction().commit();
+    }
+
     public void delete(Long id) {
         session.beginTransaction();
         ReturnRecord r = session.find(ReturnRecord.class, id);
